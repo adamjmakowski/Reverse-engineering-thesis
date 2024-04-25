@@ -8,4 +8,5 @@ Usage:
 
    All Output files are placed in Output > unpacked_{name of APK file}
    There will be two unpacked APK directories, the output files will be placed in the first one you selected when running the program.
-
+   
+The Output is currently stored in a .db file, if you'd rather see it in BinDiff then comment out the merge bindiff method call at the end.
