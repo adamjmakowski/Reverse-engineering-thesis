@@ -10,3 +10,7 @@ Usage:
    There will be two unpacked APK directories, the output files will be placed in the first one you selected when running the program.
    
 The Output is currently stored in a .db file, if you'd rather see it in BinDiff then comment out the merge bindiff method call at the end.
+
+Dependencies:
+- tkinter
+- BinExport extension for Ghidra installed
