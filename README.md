@@ -3,7 +3,7 @@ Code for reverse engineering 2 APK's with Ghidra and performing a diff operation
 
 Usage:
 1. Modify the Master Script to specify the locations to Ghidra and Bindiff directories.
-2. Place the ExportBinExport.java file in Ghidra > Features > Base > ghidra_scripts.
+2. Place the ExportBinAndC.java (or ExportBinExport if you prefer) file in Ghidra > Features > Base > ghidra_scripts.
 3. Run the Master Script, you will be prompted to select the APK files you want to process.
 
    All Output files are placed in Output > unpacked_{name of APK file}
