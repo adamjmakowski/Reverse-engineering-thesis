@@ -33,7 +33,7 @@ def unpack_apk(apk_path, output_dir):
 
 
 def analyze_with_ghidra(dex_files, output_dir, apk_name):
-    """Run Ghidra headless analysis if it hasn't been done."""
+    """Run Ghidra headless analysis and export both BinExport and combined C/C++ code."""
     ghidra_headless = "C:/Users/adamm/Thesis/Ghidra-Bindiff/ghidra_11.0.2_PUBLIC/support/analyzeHeadless.bat"
     project_path = f"C:/Users/adamm/Thesis/Ghidra-Bindiff/projects/{apk_name}"
 
@@ -42,24 +42,29 @@ def analyze_with_ghidra(dex_files, output_dir, apk_name):
         os.makedirs(project_path)
 
     for dex_path in dex_files:
-        bin_export_path = os.path.join(output_dir, os.path.splitext(os.path.basename(dex_path))[0] + ".BinExport")
+        base_name = os.path.splitext(os.path.basename(dex_path))[0]
+        bin_export_path = os.path.join(output_dir, base_name + ".BinExport")
+        c_output_path = os.path.join(output_dir, base_name + ".c")
         analysis_marker = bin_export_path + "_analysis_done.marker"
+
         if os.path.exists(analysis_marker):
-            print(f"Analysis already completed for {bin_export_path}, skipping analysis.")
+            print(f"Analysis already completed for {dex_path}, skipping analysis.")
             continue
 
         args = [
             ghidra_headless, project_path, "tempProject", "-import", dex_path,
-            "-postScript", "ExportBinExport", "-scriptPath",
-            "C:/Users/adamm/Thesis/Ghidra-Bindiff/ghidra_11.0.2_PUBLIC/Ghidra/Features/Base/ghidra_scripts",
+            "-postScript", "ExportBinAndC", bin_export_path, c_output_path,  # Pass paths to script
+            "-scriptPath", "C:/Users/adamm/Thesis/Ghidra-Bindiff/ghidra_11.0.2_PUBLIC/Ghidra/Features/Base"
+                           "/ghidra_scripts",
             "-deleteProject"
         ]
         subprocess.run(args, check=True)
-        print(f"Analysis completed for {dex_path}")
+        print(f"Analysis and export completed for {dex_path}")
 
         # Mark analysis as done by creating a marker file
         with open(analysis_marker, 'w') as f:
             f.write("Analysis completed.")
+
 
 
 def merge_bindiff_files(output_dir):
