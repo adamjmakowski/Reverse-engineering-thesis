@@ -1,3 +1,8 @@
+/*
+* Author: Adam Makowski
+* 25/04/2024
+*/
+
 import ghidra.app.decompiler.*;
 import ghidra.app.script.GhidraScript;
 import ghidra.program.model.listing.*;
